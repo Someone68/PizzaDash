@@ -1,0 +1,27 @@
+{
+  "name": "pizzadash",
+  "version": "1.0.0",
+  "description": "pizza dash thingy",
+  "main": "index.js",
+  "scripts": {
+    "test": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Someone68/PizzaDash.git"
+  },
+  "keywords": [
+    "pizza",
+    "dash"
+  ],
+  "author": "hecker",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Someone68/PizzaDash/issues"
+  },
+  "homepage": "https://github.com/Someone68/PizzaDash#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "nodemon": "^3.0.2"
+  }
+}
