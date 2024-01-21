@@ -4,7 +4,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PizzaDash</title>
-    <link rel="shortcut icon" href="assets/pizza.png" type="image/png" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="shortcut icon" href="../assets/pizza.png" type="image/png" />
+    <script src="lib/phaser.min.js"></script>
   </head>
-  <body></body>
+  <body>
+    <button id="fullscreen">Fullscreen</button>
+    <div id="gamecontainer"></div>
+  </body>
+  <script src="https://ut1l.pages.dev/src/util.js"></script>
+  <script>
+    const gameState = {};
+  </script>
+  <script src="scenes/Game.js"></script>
+  <script src="scenes/Menu.js"></script>
+  <script src="game.js"></script>
+  <script src="script.js"></script>
 </html>
