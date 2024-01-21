@@ -3,6 +3,8 @@ class SceneName extends Phaser.Scene {
     super("SceneName");
   }
 
+  init() {}
+
   preload() {}
 
   create() {}
