@@ -1,0 +1,9 @@
+{
+  "frames": {
+    "player0": { "x": 0, "y": 0, "rotation": 0, "width": 384, "height": 204 },
+    "player1": { "x": 0, "y": 204, "rotation": 0, "width": 384, "height": 204 },
+    "player2": { "x": 0, "y": 408, "rotation": 0, "width": 384, "height": 204 },
+    "player3": { "x": 0, "y": 612, "rotation": 0, "width": 384, "height": 204 },
+    "player4": { "x": 0, "y": 816, "rotation": 0, "width": 384, "height": 204 }
+  }
+}
