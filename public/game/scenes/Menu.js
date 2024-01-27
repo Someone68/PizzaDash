@@ -23,7 +23,7 @@ class Menu extends Phaser.Scene {
     startGameText.setOrigin(0.5);
     gameState.startGame.setInteractive();
     gameState.startGame.on("pointerup", () => {
-      this.scene.start("Game");
+      this.scene.start("HowPlay");
     });
   }
 }
