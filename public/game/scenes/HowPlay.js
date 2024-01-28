@@ -11,15 +11,16 @@ class HowPlay extends Phaser.Scene {
   }
 
   create() {
-    this.add.image(-9, 10, "bg").setOrigin(0);
+    let background = this.add.image(375, 250, "bg").setOrigin(0.5);
+    background.setScale(1.02);
     const title = this.add.text(375, 30, "PizzaDash", {
-      fontFamily: "pizza",
+      fontFamily: "pixel",
       fontSize: "30px",
     });
     title.setOrigin(0.5);
     gameState.startGame = this.add.sprite(660, 450, "button");
     const startGameText = this.add.text(660, 450, "Play", {
-      fontFamily: "pizza",
+      fontFamily: "pixel",
       fontSize: "20px",
     });
     startGameText.setOrigin(0.5);
@@ -37,7 +38,7 @@ the house on the left. Deliver your packages to the house on the right.
 Earn score by delivering pizza, and visit the shop for more upgrades
 to deliver more pizza.`,
       {
-        fontFamily: "pizza",
+        fontFamily: "pixel",
         fontSize: "14px",
       }
     );

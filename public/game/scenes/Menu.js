@@ -9,15 +9,16 @@ class Menu extends Phaser.Scene {
   }
 
   create() {
-    this.add.image(-9, 10, "bg").setOrigin(0);
+    let background = this.add.image(375, 250, "bg").setOrigin(0.5);
+    background.setScale(1.02);
     const title = this.add.text(375, 200, "PizzaDash", {
-      fontFamily: "pizza",
+      fontFamily: "pixel",
       fontSize: "30px",
     });
     title.setOrigin(0.5);
     gameState.startGame = this.add.sprite(375, 250, "button");
     const startGameText = this.add.text(375, 250, "Start", {
-      fontFamily: "pizza",
+      fontFamily: "pixel",
       fontSize: "20px",
     });
     startGameText.setOrigin(0.5);

@@ -90,26 +90,29 @@ class Game extends Phaser.Scene {
   create() {
     //create cursor keys
     gameState.keys = this.input.keyboard.createCursorKeys();
-    gameState.morekeys = this.input.keyboard.addKeys("W,S,A,D");
+    gameState.morekeys = this.input.keyboard.addKeys("W,S,A,D,E");
 
     //create background
     this.add.image(0, 0, "gamebg").setOrigin(0);
 
     //create sprites
     //score text
-    gameState.scoreText = this.add.text(10, 10, gameState.scor, {
-      fontFamily: "pizza",
+    gameState.scoreText = this.add.text(10, 10, "$" + gameState.scor, {
+      fontFamily: "pixel",
       color: "yellow",
       fontSize: 20,
+      antialias: false,
     });
     gameState.scoreText.setOrigin(0);
     gameState.scoreText.setDepth(99);
 
     //top text
     gameState.topText = this.add.text(375, 40, "Welcome to PizzaDash!", {
-      fontFamily: "pizza",
+      fontFamily: "pixel",
+      antialias: false,
       color: "white",
       fontSize: 17,
+      antialias: false,
     });
     gameState.topText.setOrigin(0.5);
     gameState.topText.setDepth(100);
@@ -131,6 +134,15 @@ class Game extends Phaser.Scene {
     gameState.player.setScale(0.2);
     gameState.player.setDepth(10);
 
+    //devtools
+    gameState.devtools.shop = this.add
+      .text(100, 500, "[dev] open shop")
+      .setOrigin(1);
+    gameState.devtools.shop.setInteractive();
+    gameState.devtools.shop.on("pointerup", () => {
+      this.scene.start("Shop");
+    });
+
     //create animations
     this.anims.create({
       key: "fly",
@@ -150,7 +162,8 @@ class Game extends Phaser.Scene {
     });
 
     //play animations
-    gameState.player.anims.play("fly", true);
+    if (!gameState.carryingPkg) gameState.player.anims.play("fly", true);
+    else gameState.player.anims.play("flypkg", true);
 
     //create trees
     gameState.trees = [];
@@ -213,13 +226,21 @@ class Game extends Phaser.Scene {
       if (gameState.carryingPkg) {
         gameState.player.play("fly");
         gameState.carryingPkg = false;
-        gameState.scor += 1;
-        this.temp(gameState.player, "+1", {
-          fontFamily: "pizza",
+        gameState.scor += gameState.moneyget;
+        this.temp(gameState.player, `+${gameState.moneyget}`, {
+          fontFamily: "pixel",
         });
       }
     }
-    gameState.scoreText.setText(gameState.scor);
+    if (
+      gameState.morekeys.E.isDown &&
+      this.checkCollision(gameState.player, gameState.pizzahouse) &&
+      gameState.scor >= 1
+    ) {
+      this.scene.start("Shop");
+    }
+
+    gameState.scoreText.setText("$" + gameState.scor);
 
     if (!gameState.tempTopText) {
       gameState.topText.setText(gameState.currentTopText);

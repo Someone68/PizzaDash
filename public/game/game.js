@@ -3,7 +3,11 @@ const config = {
   width: 750,
   height: 500,
   parent: "gamecontainer",
-  scene: [Menu, HowPlay, Game],
+  pixelArt: true,
+  scene: [Menu, HowPlay, Game, Shop],
+  scale: {
+    mode: Phaser.Scale.ScaleModes.FIT,
+  },
 };
 
 let game = new Phaser.Game(config);
