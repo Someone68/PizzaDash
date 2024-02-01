@@ -9,7 +9,9 @@
     <script src="lib/phaser.min.js"></script>
   </head>
   <body>
-    <button id="fullscreen">Fullscreen</button>
+    <a href="../index" id="exit"
+      ><img src="../assets/back.png" alt="exit" id="exitimg"
+    /></a>
     <div id="gamecontainer"></div>
   </body>
   <script src="https://ut1l.pages.dev/src/util.js"></script>
@@ -19,14 +21,14 @@
       scor: 0,
       currentTopText: "Welcome to PizzaDash!",
       tempTopText: false,
-      DEV_MODE: true,
+      DEV_MODE: false,
       devtools: {},
       moneyget: 1,
     };
   </script>
+  <script src="scenes/Menu.js"></script>
   <script src="scenes/Shop.js"></script>
   <script src="scenes/Game.js"></script>
-  <script src="scenes/Menu.js"></script>
   <script src="scenes/HowPlay.js"></script>
   <script src="game.js"></script>
   <script src="script.js"></script>

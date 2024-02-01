@@ -72,11 +72,17 @@ class Game extends Phaser.Scene {
       { x: 75, y: 35 },
       { x: 165, y: 35 },
       { x: 255, y: 35 },
+      { x: 530, y: 280 },
+      { x: 620, y: 280 },
+      { x: 710, y: 280 },
+      { x: 560, y: 295 },
+      { x: 650, y: 295 },
     ];
     this.load.image("gamebg", "../assets/gamebg.png");
     this.load.image("tree", "../assets/tree.png");
     this.load.image("house", "../assets/house.png");
     this.load.image("pizzahouse", "../assets/pizzahouse.png");
+    this.load.image("pizza", "../assets/pizzaslice.png");
     this.load.spritesheet("players", "../assets/player/player.png", {
       frameWidth: 384,
       frameHeight: 204,
@@ -88,6 +94,9 @@ class Game extends Phaser.Scene {
   }
 
   create() {
+    //music
+    // gameState.backgroundMusic.play();
+
     //create cursor keys
     gameState.keys = this.input.keyboard.createCursorKeys();
     gameState.morekeys = this.input.keyboard.addKeys("W,S,A,D,E");
@@ -104,7 +113,7 @@ class Game extends Phaser.Scene {
       antialias: false,
     });
     gameState.scoreText.setOrigin(0);
-    gameState.scoreText.setDepth(99);
+    gameState.scoreText.setDepth(9900);
 
     //top text
     gameState.topText = this.add.text(375, 40, "Welcome to PizzaDash!", {
@@ -115,33 +124,93 @@ class Game extends Phaser.Scene {
       antialias: false,
     });
     gameState.topText.setOrigin(0.5);
-    gameState.topText.setDepth(100);
+    gameState.topText.setDepth(10000);
 
     //pizzahouse
     gameState.pizzahouse = this.add.sprite(-120, 150, "pizzahouse");
-    gameState.pizzahouse.setDepth(2);
+    gameState.pizzahouse.setDepth(300);
     gameState.pizzahouse.setOrigin(0);
     gameState.pizzahouse.setScale(0.5);
+    let pizza = this.add.image(65, 300, "pizza").setOrigin(0);
+    pizza.setDepth(400);
+    pizza.setScale(0.15);
 
     //house
     gameState.house = this.add.sprite(600, 40, "house");
-    gameState.house.setDepth(3);
+    gameState.house.setDepth(500);
     gameState.house.setOrigin(0);
     gameState.house.setScale(0.4);
 
     //player
     gameState.player = this.add.sprite(50, 350, "player");
     gameState.player.setScale(0.2);
-    gameState.player.setDepth(10);
+    gameState.player.setDepth(1000);
 
     //devtools
-    gameState.devtools.shop = this.add
-      .text(100, 500, "[dev] open shop")
-      .setOrigin(1);
-    gameState.devtools.shop.setInteractive();
-    gameState.devtools.shop.on("pointerup", () => {
-      this.scene.start("Shop");
-    });
+    if (gameState.DEV_MODE) {
+      gameState.devtools.shop = this.add
+        .text(150, 500, "[dev] open shop")
+        .setOrigin(1);
+      gameState.devtools.shop.setInteractive();
+      gameState.devtools.shop.on("pointerup", () => {
+        // gameState.backgroundMusic.pause();
+        this.scene.start("Shop");
+      });
+
+      gameState.devtools.x10 = this.add
+        .text(100, 480, "[dev] x10")
+        .setOrigin(1);
+      gameState.devtools.x10.setInteractive();
+      gameState.devtools.x10.on("pointerup", () => {
+        gameState.scor *= 10;
+      });
+
+      gameState.devtools.money = this.add
+        .text(550, 480, "[dev] +∞")
+        .setOrigin(1);
+      gameState.devtools.money.setInteractive();
+      gameState.devtools.money.on("pointerup", () => {
+        gameState.scor = Infinity;
+      });
+
+      gameState.devtools.money = this.add
+        .text(250, 480, "[dev] x100")
+        .setOrigin(1);
+      gameState.devtools.money.setInteractive();
+      gameState.devtools.money.on("pointerup", () => {
+        gameState.scor *= 100;
+      });
+
+      gameState.devtools.money = this.add
+        .text(400, 480, "[dev] x1000")
+        .setOrigin(1);
+      gameState.devtools.money.setInteractive();
+      gameState.devtools.money.on("pointerup", () => {
+        gameState.scor *= 1000;
+      });
+
+      gameState.devtools.money = this.add
+        .text(100, 460, "[dev] +1")
+        .setOrigin(1);
+      gameState.devtools.money.setInteractive();
+      gameState.devtools.money.on("pointerup", () => {
+        gameState.scor += 1;
+      });
+
+      gameState.devtools.ruin = this.add
+        .text(500, 500, "[dev] ruin the fun")
+        .setOrigin(1);
+      gameState.devtools.ruin.setInteractive();
+      gameState.devtools.ruin.on("pointerup", () => {
+        gameState.scor += 1;
+        gameState.speed = 50;
+        setInterval(() => {
+          gameState.scor *= 1.1;
+          gameState.moneyget *= 1.05;
+          gameState.carryingPkg = true;
+        }, 20);
+      });
+    }
 
     //create animations
     this.anims.create({
@@ -175,7 +244,47 @@ class Game extends Phaser.Scene {
       );
       gameState.trees[i].setOrigin(0);
       gameState.trees[i].setScale(0.2);
-      gameState.trees[i].setDepth(1);
+      gameState.trees[i].setDepth(i + 1);
+      if (i === 0) {
+        gameState.trees[i].setInteractive();
+        gameState.trees[i].on("pointerup", () => {
+          gameState.DEV_MODE = true;
+          alert(
+            "-=|| Developer Mode ||=-\nDeveloper mode was enabled. Please be responsible.\nI do not condone or endorse cheating and hacking in any way. These tools were made for testing purposes (and MAYBE some fun) only."
+          );
+          this.scene.restart();
+        });
+      }
+
+      let pizza1 = this.add
+        .image(
+          gameState.treePos[i].x + 20,
+          gameState.treePos[i].y + 30,
+          "pizza"
+        )
+        .setScale(0.04);
+      pizza1.setOrigin(0);
+      pizza1.setDepth(i + 2);
+
+      let pizza2 = this.add
+        .image(
+          gameState.treePos[i].x + 60,
+          gameState.treePos[i].y + 70,
+          "pizza"
+        )
+        .setScale(0.04);
+      pizza2.setOrigin(0);
+      pizza2.setDepth(i + 3);
+
+      let pizza3 = this.add
+        .image(
+          gameState.treePos[i].x + 30,
+          gameState.treePos[i].y + 80,
+          "pizza"
+        )
+        .setScale(0.04);
+      pizza3.setOrigin(0);
+      pizza3.setDepth(i + 4);
     }
   }
 
@@ -237,6 +346,7 @@ class Game extends Phaser.Scene {
       this.checkCollision(gameState.player, gameState.pizzahouse) &&
       gameState.scor >= 1
     ) {
+      // gameState.backgroundMusic.pause();
       this.scene.start("Shop");
     }
 

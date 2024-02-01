@@ -8,6 +8,9 @@ const config = {
   scale: {
     mode: Phaser.Scale.ScaleModes.FIT,
   },
+  audio: {
+    disableWebAudio: true, // disable Web Audio API if needed
+  },
 };
 
 let game = new Phaser.Game(config);

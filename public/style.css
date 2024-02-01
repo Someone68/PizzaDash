@@ -70,6 +70,7 @@ button {
 button,
 button span {
   font-family: "Abel", sans-serif;
+  justify-self: center;
 }
 
 button:hover {

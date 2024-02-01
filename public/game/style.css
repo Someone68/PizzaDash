@@ -43,3 +43,13 @@ canvas {
 #fullscreen:fullscreen {
   display: none;
 }
+
+#exitimg {
+  width: 60px;
+}
+
+#exit {
+  text-decoration: none;
+  position: absolute;
+  filter: brightness(200%);
+}

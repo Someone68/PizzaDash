@@ -31,6 +31,7 @@ class Shop extends Phaser.Scene {
   }
 
   create() {
+    // gameState.backgroundMusic.play();
     this.add.image(0, 0, "shopbg").setOrigin(0);
     gameState.shopscoretxt = this.add.text(3, 3, "$" + gameState.scor, {
       fontFamily: "pixel",
@@ -40,6 +41,7 @@ class Shop extends Phaser.Scene {
     let exitbtn = this.add.sprite(718, 32, "exit").setOrigin(0.5);
     exitbtn.setInteractive();
     exitbtn.on("pointerup", () => {
+      // gameState.backgroundMusic.pause();
       this.scene.start("Game");
     });
     this.add
@@ -48,59 +50,67 @@ class Shop extends Phaser.Scene {
         fontSize: "25px",
       })
       .setOrigin(0.5);
-    gameState.shopItems = [
-      {
-        name: "FedEx Shipping",
-        desc: "um are they chucking the pakages now",
-        code: () => {
-          gameState.speed = 7;
+    this.add
+      .text(375, 470, "i will add more later, im lazy", {
+        fontFamily: "pixel",
+        fontSize: "10px",
+      })
+      .setOrigin(0.5);
+    if (!gameState.shopItems) {
+      gameState.shopItems = [
+        {
+          name: "FedEx Shipping",
+          desc: "um are they chucking the pakages now",
+          code: () => {
+            gameState.speed = 7;
+          },
+          cost: 10,
+          bought: false,
+          unlocked: true,
         },
-        cost: 20,
-        bought: false,
-        unlocked: true,
-      },
-      {
-        name: "Temu Shipping",
-        desc: "ok, now they are just chucking the packages 25ft away from the door.",
-        code: () => {
-          gameState.speed = 15;
+        {
+          name: "Temu Shipping",
+          desc: "ok, now they are just chucking the packages 25ft away from the door.",
+          code: () => {
+            gameState.speed = 15;
+          },
+          cost: 20,
+          bought: false,
+          unlocked: false,
         },
-        cost: 70,
-        bought: false,
-        unlocked: false,
-      },
-      {
-        name: "Inflation",
-        desc: "get more money every delivery",
-        code: () => {
-          gameState.moneyget += 5;
+        {
+          name: "Inflation",
+          desc: "get more money every delivery",
+          code: () => {
+            gameState.moneyget += 5;
+          },
+          cost: 25,
+          bought: false,
+          unlocked: false,
+          multibuy: true,
         },
-        cost: 50,
-        bought: false,
-        unlocked: false,
-        multibuy: true,
-      },
-      {
-        name: "More Employees",
-        desc: "get +$5 every second",
-        code: () => {
-          setInterval(() => {
-            gameState.scor += 5;
-          }, 1000);
+        {
+          name: "More Employees",
+          desc: "get +$5 every second",
+          code: () => {
+            setInterval(() => {
+              gameState.scor += 5;
+            }, 1000);
+          },
+          cost: 60,
+          bought: false,
+          unlocked: false,
+          multibuy: true,
         },
-        cost: 100,
-        bought: false,
-        unlocked: false,
-        multibuy: true,
-      },
-    ];
+      ];
+    }
     gameState.shopItemsSprites = [];
     gameState.shopItems.forEach((item, index) => {
       let shopItem = this.add.sprite(375, 110 + index * 100, "shopitem");
       if (item.bought) shopItem.setTexture("boughtshopitem");
       if (!item.unlocked) shopItem.setTexture("lockedshopitem");
       this.add
-        .text(375, 110 + index * 100 - 7, item.name, {
+        .text(375, 110 + index * 100 - 7, item.name + ` [\$${item.cost}]`, {
           fontFamily: "pixel",
           fontSize: "20px",
         })

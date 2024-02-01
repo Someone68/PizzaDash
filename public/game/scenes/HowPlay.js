@@ -11,6 +11,7 @@ class HowPlay extends Phaser.Scene {
   }
 
   create() {
+    // gameState.backgroundMusic.play();
     let background = this.add.image(375, 250, "bg").setOrigin(0.5);
     background.setScale(1.02);
     const title = this.add.text(375, 30, "PizzaDash", {
@@ -26,6 +27,7 @@ class HowPlay extends Phaser.Scene {
     startGameText.setOrigin(0.5);
     gameState.startGame.setInteractive();
     gameState.startGame.on("pointerup", () => {
+      // gameState.backgroundMusic.pause();
       this.scene.start("Game");
     });
 
